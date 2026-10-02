@@ -53,10 +53,10 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/profile.jpg
     - assets/background.png
     - assets/mobil1.jpg
     - assets/mobil2.jpg
+    - assets/profile.jpg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

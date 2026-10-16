@@ -16,7 +16,7 @@ class FavoriteScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start, // Penulisan yang benar
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
             'Favorit Saya',
@@ -32,7 +32,6 @@ class FavoriteScreen extends StatelessWidget {
             style: const TextStyle(color: Colors.white54, fontSize: 13),
           ),
           const SizedBox(height: 20),
-
           Expanded(
             child: favoriteDrivers.isEmpty
                 ? Center(
@@ -100,7 +99,7 @@ class FavoriteScreen extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 2),
                                   Text(
-                                    driver.vehicleTypes as String,
+                                    driver.vehicleTypes.join(', '), // SUDAH DIPERBAIKI DISINI
                                     style: const TextStyle(
                                       color: Colors.white54,
                                       fontSize: 12,

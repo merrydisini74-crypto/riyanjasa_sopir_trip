@@ -155,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           // Gradient Overlay Dark
           Container(
-            color: Colors.black.withOpacity(0.65),
+            color: Colors.black.withValues(alpha: 0.65),
           ),
           
           // Header Logo & Title
@@ -193,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
               margin: const EdgeInsets.all(20),
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: const Color(0xFF1E293B).withOpacity(0.95),
+                color: const Color(0xFF1E293B).withValues(alpha: 0.95),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(color: Colors.white10),
               ),

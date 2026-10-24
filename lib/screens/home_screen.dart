@@ -9,7 +9,7 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({
     super.key,
     required this.drivers,
-    required this.onToggleFavorite,
+    required this.onToggleFavorite, required List<Driver> favoriteDrivers,
   });
 
   @override

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/driver.dart';
-import '../data/mock_data.dart';
 import 'home_screen.dart';
 import 'favorite_screen.dart';
 import 'profile_screen.dart';
@@ -32,7 +31,7 @@ class _MainScreenState extends State<MainScreen> {
     final List<Widget> screens = [
       HomeScreen(
         favoriteDrivers: favoriteDrivers,
-        onToggleFavorite: _toggleFavorite,
+        onToggleFavorite: _toggleFavorite, drivers: [],
       ),
       FavoriteScreen(
         favoriteDrivers: favoriteDrivers,

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import '../data/mock_data.dart';
 import '../models/driver.dart';
 import 'home_screen.dart';
 import 'favorite_screen.dart';
-import 'profile_screen.dart';
+import 'about_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -13,64 +14,88 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
-  List<Driver> favoriteDrivers = [];
 
-  // Fungsi Toggle Tambah / Hapus Favorit
+  // Mengambil list driver awal dari mock_data
+  final List<Driver> _drivers = List.from(dummyDrivers);
+
   void _toggleFavorite(Driver driver) {
     setState(() {
-      if (favoriteDrivers.contains(driver)) {
-        favoriteDrivers.remove(driver);
-      } else {
-        favoriteDrivers.add(driver);
-      }
+      driver.isFavorite = !driver.isFavorite;
     });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          driver.isFavorite
+              ? '${driver.name} ditambahkan ke Favorit'
+              : '${driver.name} dihapus dari Favorit',
+        ),
+        duration: const Duration(seconds: 1),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> screens = [
+    final favoriteDrivers = _drivers.where((d) => d.isFavorite).toList();
+
+    // List Halaman Aplikasi
+    final List<Widget> pages = [
       HomeScreen(
-        favoriteDrivers: favoriteDrivers,
-        onToggleFavorite: _toggleFavorite, drivers: [],
+        drivers: _drivers,
+        onToggleFavorite: _toggleFavorite, favoriteDrivers: [],
       ),
       FavoriteScreen(
         favoriteDrivers: favoriteDrivers,
         onRemoveFavorite: _toggleFavorite,
       ),
-      ProfileScreen(
-        onLogout: () {
-          Navigator.pushReplacementNamed(context, '/login');
-        },
-      ),
+      const AboutScreen(),
     ];
 
     return Scaffold(
       backgroundColor: const Color(0xFF0F172A),
-      body: SafeArea(child: screens[_currentIndex]),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        backgroundColor: const Color(0xFF1E293B),
-        selectedItemColor: const Color(0xFF3B82F6),
-        unselectedItemColor: Colors.white54,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_rounded),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_rounded),
-            label: 'Favorit',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_rounded),
-            label: 'Tentang',
-          ),
-        ],
+      body: SafeArea(
+        child: pages[_currentIndex],
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFF1E293B),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.3),
+              blurRadius: 20,
+              offset: const Offset(0, -5),
+            ),
+          ],
+        ),
+        child: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          backgroundColor: const Color(0xFF1E293B),
+          selectedItemColor: const Color(0xFF3B82F6),
+          unselectedItemColor: const Color(0xFF64748B),
+          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_rounded),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite_rounded),
+              label: 'Favorit',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.info_outline_rounded),
+              label: 'Tentang',
+            ),
+          ],
+        ),
       ),
     );
   }
